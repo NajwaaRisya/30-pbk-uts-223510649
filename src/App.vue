@@ -1,55 +1,32 @@
 <template>
-  <div>
-    <header>
-      <nav>
-        <ul>
-          <li @click="toggleMenu('todos')" :class="{ active: activeMenu === 'todos' }">Todos</li>
-          <li @click="toggleMenu('posts')" :class="{ active: activeMenu === 'posts' }">Posts</li>
-        </ul>
-      </nav>
-    </header>
-    <div class="container">
-      <Todos v-if="activeMenu === 'todos'" />
-      <Posts v-else-if="activeMenu === 'posts'" />
-    </div>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar>
+        <q-toolbar-title>
+          My Quasar App
+        </q-toolbar-title>
+        <q-btn flat round @click="goToRoute('todos')">Todos</q-btn>
+        <q-btn flat round @click="goToRoute('posts')">Posts</q-btn>
+        <q-btn flat round @click="goToRoute('albums')">Albums</q-btn>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import Todos from './Todos.vue';
-import Posts from './Posts.vue';
+import { useRouter } from 'vue-router';
 
-const activeMenu = ref('todos');
+const router = useRouter();
 
-function toggleMenu(menu) {
-  activeMenu.value = menu;
+function goToRoute(route) {
+  router.push(`/${route}`);
 }
 </script>
 
-<style scoped>
-/* Styles for the header and menu */
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 0;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-  cursor: pointer;
-}
-
-nav ul li.active {
-  font-weight: bold;
-}
-
+<style lang="scss">
 /* Add any global styles here */
 </style>
